@@ -27,8 +27,8 @@ local DTPanelOptions = {
 		type = 'select',
 		name = L["Growth"],
 		values = {
-			HORIZONTAL = 'HORIZONTAL',
-			VERTICAL = 'VERTICAL'
+			HORIZONTAL = L["HORIZONTAL"],
+			VERTICAL = L["VERTICAL"],
 		},
 	},
 	width = {
@@ -66,12 +66,12 @@ local DTPanelOptions = {
 				type = "select",
 				name = L["Frame Strata"],
 				values = {
-					["BACKGROUND"] = "BACKGROUND",
-					["LOW"] = "LOW",
-					["MEDIUM"] = "MEDIUM",
-					["HIGH"] = "HIGH",
-					["DIALOG"] = "DIALOG",
-					["TOOLTIP"] = "TOOLTIP",
+					["BACKGROUND"] = L["BACKGROUND"],
+					["LOW"] = L["LOW"],
+					["MEDIUM"] = L["MEDIUM"],
+					["HIGH"] = L["HIGH"],
+					["DIALOG"] = L["DIALOG"],
+					["TOOLTIP"] = L["TOOLTIP"],
 				},
 			},
 			frameLevel = {
