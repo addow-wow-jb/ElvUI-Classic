@@ -1,4 +1,6 @@
 ### Version 1.44 [ETA: 🍨]
+**Information:** The ActionBar changes from 1.43 are now final and will  
+not change again. All bar pages are now fully in sync with TBC and retail  
 **General:** Updated for Classic Era client  
 **Locales:** koKR Localization update by (손길, Siyoung)  
 ___
