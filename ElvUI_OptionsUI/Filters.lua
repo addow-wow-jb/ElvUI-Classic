@@ -176,7 +176,7 @@ E.Options.args.filters = {
 	args = {
 		mainOptions = {
 			type = 'group',
-			name = 'Main Options',
+			name = L["Main Options"],
 			order = 1,
 			args = {
 				createFilter = {
@@ -726,36 +726,35 @@ E.Options.args.filters = {
 	}
 }
 
-E.Options.args.filters.args.help = ACH:Group('Help', nil, 2)
+E.Options.args.filters.args.help = ACH:Group(L["Help"], nil, 2)
 
 local COLOR = E:ClassColor(E.myclass, true)
 local COLOR1 = format('|c%s', COLOR.colorStr)
 local COLOR2 = '|cFFFFFFFF'
 
 local FilterHelp = {
-	'*Whitelists:|r ^Personal, nonPersonal, Boss, CastByUnit, notCastByUnit, Dispellable (includes steal-able), CastByNPC, CastByPlayers|r',
-	'*Blacklists:|r ^blockNonPersonal, blockNoDuration, blockCastByPlayers | A blacklist filter is only effective against filters that come after it in the priority list. It will not block anything from the filters before it.|r',
-	'^A blacklist filter is only effective against filters that come after it in the priority list. It will not block anything from the filters before it.',
+	L["*Whitelists:|r ^Personal, nonPersonal, Boss, CastByUnit, notCastByUnit, Dispellable (includes steal-able), CastByNPC, CastByPlayers|r"],
+	L["*Blacklists:|r ^blockNonPersonal, blockNoDuration, blockCastByPlayers | A blacklist filter is only effective against filters that come after it in the priority list. It will not block anything from the filters before it.|r"],
 	' ',
-	'*Boss:|r ^Auras (debuffs only?) cast by a boss unit.|r',
-	'*Personal:|r ^Auras cast by yourself.|r',
-	'*nonPersonal:|r ^Auras cast by anyone other than yourself.|r',
-	'*CastByUnit:|r ^Auras cast by the unit of the unitframe or nameplate (so on target frame it only shows auras cast by the target unit).|r',
-	'*notCastByUnit:|r ^Auras cast by anyone other than the unit of the unitframe or nameplate.|r',
-	'*Dispellable:|r ^Auras you can either dispel or spellsteal.|r',
-	'*CastByNPC:|r ^Auras cast by any NPC.|r',
-	'*CastByPlayers:|r ^Auras cast by any player-controlled unit (so no NPCs).|r',
-	'*blockCastByPlayers:|r ^Blocks any aura that is cast by player-controlled units (so will only show auras cast by NPCs).|r',
-	'*blockNoDuration:|r ^Blocks any aura without a duration.|r',
-	'*blockNonPersonal:|r ^Blocks any aura that is not cast by yourself.|r',
+	L["*Boss:|r ^Auras (debuffs only?) cast by a boss unit.|r"],
+	L["*Personal:|r ^Auras cast by yourself.|r"],
+	L["*nonPersonal:|r ^Auras cast by anyone other than yourself.|r"],
+	L["*CastByUnit:|r ^Auras cast by the unit of the unitframe or nameplate (so on target frame it only shows auras cast by the target unit).|r"],
+	L["*notCastByUnit:|r ^Auras cast by anyone other than the unit of the unitframe or nameplate.|r"],
+	L["*Dispellable:|r ^Auras you can either dispel or spellsteal.|r"],
+	L["*CastByNPC:|r ^Auras cast by any NPC.|r"],
+	L["*CastByPlayers:|r ^Auras cast by any player-controlled unit (so no NPCs).|r"],
+	L["*blockCastByPlayers:|r ^Blocks any aura that is cast by player-controlled units (so will only show auras cast by NPCs).|r"],
+	L["*blockNoDuration:|r ^Blocks any aura without a duration.|r"],
+	L["*blockNonPersonal:|r ^Blocks any aura that is not cast by yourself.|r"],
 	' ',
-	'*Show Everything:|r ^Set "Max Duration" to 0 & Leave Priority List Empty or (1) Personal | (2) nonPersonal',
-	'*Block Blacklisted Auras, Show Everything Else:|r ^(1) Blacklist| (2) Personal | (3) nonPersonal',
-	'*Block Auras Without Duration, Show Everything Else:|r ^(1) blockNoDuration | (2) Personal | (3) nonPersonal',
-	'*Block Auras Without Duration, Block Blacklisted Auras, Show Everything Else:|r ^(1) blockNoDuration | (2) Blacklist | (3) Personal | (4) nonPersonal',
-	'*Block Everything, Except Your Own Auras:|r ^(1) Personal',
-	'*Block Everything, Except Whitelisted Auras:|r ^(1) Whitelist',
-	'*Block Everything, Except Whitelisted Auras That Are Cast By Yourself:|r ^(1) blockNonPersonal | (2) Whitelist'
+	L["*Show Everything:|r ^Set 'Max Duration' to 0 & Leave Priority List Empty or (1) Personal | (2) nonPersonal"],
+	L["*Block Blacklisted Auras, Show Everything Else:|r ^(1) Blacklist| (2) Personal | (3) nonPersonal"],
+	L["*Block Auras Without Duration, Show Everything Else:|r ^(1) blockNoDuration | (2) Personal | (3) nonPersonal"],
+	L["*Block Auras Without Duration, Block Blacklisted Auras, Show Everything Else:|r ^(1) blockNoDuration | (2) Blacklist | (3) Personal | (4) nonPersonal"],
+	L["*Block Everything, Except Your Own Auras:|r ^(1) Personal"],
+	L["*Block Everything, Except Whitelisted Auras:|r ^(1) Whitelist"],
+	L["*Block Everything, Except Whitelisted Auras That Are Cast By Yourself:|r ^(1) blockNonPersonal | (2) Whitelist"]
 }
 
 for i, text in ipairs(FilterHelp) do

@@ -1,4 +1,11 @@
-### Version 1.43 [ETA: 🍨]
+### Version 1.45 [ETA: 🍨]
+___
+### Version 1.44 [05/31/2021]
+**This is for Classic Era, not TBC**  
+**General:** Updated for Classic Era client  
+**Locales:** koKR Localization update by (손길, Siyoung)  
+___
+### Version 1.43 [05/12/2021]
 **Auras:** Fixed Font issue  
 **Bags:** Fixed button spacing option  
 **Config:** Updated General, Media, BlizzUI Improvements options  
