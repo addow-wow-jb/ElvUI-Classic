@@ -8,7 +8,7 @@ local format = format
 E.Options.args.tagGroup = ACH:Group(L["Available Tags"], nil, 3)
 E.Options.args.tagGroup.args.GuideLink = ACH:Input(L["Guide:"], nil, 1, nil, nil, function() return 'https://www.tukui.org/forum/viewtopic.php?f=9&t=6' end)
 E.Options.args.tagGroup.args.GuideLink.customWidth = 310
-E.Options.args.tagGroup.args.WikiLink = ACH:Input(L["Wiki:"], nil, 2, nil, nil, function() return 'https://github.com/Tukui-org/ElvUI-Classic/wiki' end)
+E.Options.args.tagGroup.args.WikiLink = ACH:Input(L["Wiki:"], nil, 2, nil, nil, function() return 'https://github.com/tukui-org/ElvUI-Classic/wiki' end)
 E.Options.args.tagGroup.args.WikiLink.customWidth = 290
 E.Options.args.tagGroup.args.ColorWheel = ACH:Execute(L["Color Picker"], nil, 3, function() _G.ColorPickerFrame:Show() _G.ColorPickerFrame:SetFrameStrata('FULLSCREEN_DIALOG') _G.ColorPickerFrame:SetClampedToScreen(true) _G.ColorPickerFrame:Raise() end)
 E.Options.args.tagGroup.args.ColorWheel.customWidth = 120

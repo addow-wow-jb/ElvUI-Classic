@@ -186,7 +186,7 @@ E.Options.args.info = {
 					type = "execute",
 					name = L["Ticket Tracker"],
 					customWidth = 140,
-					func = function() E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/Tukui-org/ElvUI-Classic/issues") end,
+					func = function() E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/tukui-org/ElvUI-Classic/issues") end,
 				},
 				discord = {
 					order = 3,
@@ -208,7 +208,7 @@ E.Options.args.info = {
 					name = L["Development Version"],
 					desc = L["Link to the latest development version."],
 					customWidth = 140,
-					func = function() E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/Tukui-org/ElvUI-Classic/archive/refs/heads/development.zip") end,
+					func = function() E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/tukui-org/ElvUI-Classic/archive/refs/heads/development.zip") end,
 				},
 			},
 		},
