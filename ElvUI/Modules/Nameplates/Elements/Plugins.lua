@@ -77,8 +77,11 @@ end
 function NP:Construct_TargetIndicator(nameplate)
 	local TargetIndicator = CreateFrame("Frame", nameplate:GetName() .. "TargetIndicator", nameplate)
 	TargetIndicator:SetFrameLevel(0)
+	-- ...AddOns\ElvUI\Modules\nameplates\Elements\Plugins.lua:82: attempt to call method 'SetBackdrop' (a nil value)
+	-- TargetIndicator.Shadow = CreateFrame("Frame", nil, TargetIndicator)
 
-	TargetIndicator.Shadow = CreateFrame("Frame", nil, TargetIndicator)
+	--See https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Modules/Nameplates/Elements/Plugins.lua#L35
+	TargetIndicator.Shadow = CreateFrame("Frame", nil, TargetIndicator, 'BackdropTemplate')
 	TargetIndicator.Shadow:SetBackdrop({edgeFile = E.LSM:Fetch("border", "ElvUI GlowBorder"), edgeSize = E:Scale(5)})
 	TargetIndicator.Shadow:Hide()
 

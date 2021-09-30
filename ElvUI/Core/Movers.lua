@@ -91,7 +91,8 @@ local function UpdateMover(name, parent, textString, overlay, snapOffset, postdr
 
 	if overlay == nil then overlay = true end
 
-	local f = CreateFrame('Button', name, E.UIParent)
+	-- local f = CreateFrame('Button', name, E.UIParent)
+	local f = CreateFrame('Button', name, E.UIParent, 'BackdropTemplate')
 	f:SetClampedToScreen(true)
 	f:RegisterForDrag('LeftButton', 'RightButton')
 	f:SetFrameLevel(parent:GetFrameLevel() + 1)

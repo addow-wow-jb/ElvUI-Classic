@@ -1117,8 +1117,13 @@ function AB:LAB_ButtonUpdate(button)
 
 	button.Count:SetTextColor(color.r, color.g, color.b)
 
-	local border = (AB.db.equippedItem and button:IsEquipped() and AB.db.equippedItemColor) or E.db.general.bordercolor
-	button:SetBackdropBorderColor(border.r, border.g, border.b)
+
+	-- ...rface\AddOns\ElvUI\Modules\actionbars\ActionBars.lua:1121: attempt to call method 'SetBackdropBorderColor' (a nil value)
+	-- See https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Modules/ActionBars/ActionBars.lua#L1300
+	if button.backdrop then
+		local border = (AB.db.equippedItem and button:IsEquipped() and AB.db.equippedItemColor) or E.db.general.bordercolor
+		button:SetBackdropBorderColor(border.r, border.g, border.b)
+	end
 end
 
 function AB:LAB_UpdateRange(button)

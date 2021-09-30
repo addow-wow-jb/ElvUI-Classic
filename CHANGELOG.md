@@ -1,3 +1,7 @@
+### Version 1.46 [ETA: 🍨]
+### Version 1.45 [09/30/2021]
+**Fixed:** Fixed various bug related to patch wow 11400
+___
 ### Version 1.45 [ETA: 🍨]
 ___
 ### Version 1.44 [05/31/2021]

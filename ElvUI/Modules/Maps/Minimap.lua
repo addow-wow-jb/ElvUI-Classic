@@ -25,7 +25,7 @@ local ToggleTalentFrame = ToggleTalentFrame
 -- GLOBALS: GetMinimapShape
 
 --Create the minimap micro menu
-local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", E.UIParent)
+local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", E.UIParent, 'BackdropTemplate')
 local menuList = {
 	{text = _G.CHARACTER_BUTTON,
 	func = function() ToggleCharacter("PaperDollFrame") end},

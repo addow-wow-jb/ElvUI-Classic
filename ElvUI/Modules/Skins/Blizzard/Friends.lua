@@ -1,3 +1,5 @@
+--See https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Modules/Skins/Blizzard/Friends.lua
+
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
@@ -8,6 +10,9 @@ local hooksecurefunc = hooksecurefunc
 local GetGuildRosterInfo = GetGuildRosterInfo
 local GUILDMEMBERS_TO_DISPLAY = GUILDMEMBERS_TO_DISPLAY
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+
+local C_FriendList_GetNumWhoResults = C_FriendList.GetNumWhoResults
+local C_FriendList_GetWhoInfo = C_FriendList.GetWhoInfo
 
 local function skinFriendRequest(frame)
 	if frame.isSkinned then return end
@@ -110,13 +115,8 @@ function S:FriendsFrame()
 	end)
 
 	S:HandleEditBox(_G.AddFriendNameEditBox)
-	S:HandleEditBox(_G.ScrollOfResurrectionSelectionFrameTargetEditBox)
-
-	S:HandleScrollBar(_G.ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar, 4)
 
 	_G.AddFriendFrame:SetTemplate('Transparent')
-	_G.ScrollOfResurrectionSelectionFrame:SetTemplate('Transparent')
-	_G.ScrollOfResurrectionSelectionFrameList:SetTemplate()
 
 	-- Pending invites
 	_G.FriendsFrameFriendsScrollFrame:StripTextures()
@@ -139,43 +139,14 @@ function S:FriendsFrame()
 	end)
 
 	S:HandleFrame(_G.FriendsFriendsFrame, true)
-	S:HandleFrame(_G.RecruitAFriendFrame, true)
-	S:HandleFrame(_G.RecruitAFriendSentFrame, true)
 
 	_G.FriendsFriendsList:StripTextures()
 	_G.IgnoreListFrame:StripTextures()
-	_G.RecruitAFriendNoteFrame:StripTextures()
-	_G.ScrollOfResurrectionFrame:StripTextures()
-	_G.ScrollOfResurrectionFrameNoteFrame:StripTextures()
 
 	S:HandleButton(_G.FriendsFriendsCloseButton)
 	S:HandleButton(_G.FriendsFriendsSendRequestButton)
-	S:HandleButton(_G.RecruitAFriendFrameSendButton)
-	S:HandleButton(_G.RecruitAFriendSentFrame.OKButton)
-	S:HandleButton(_G.ScrollOfResurrectionFrameAcceptButton)
-	S:HandleButton(_G.ScrollOfResurrectionFrameCancelButton)
-
-	S:HandleCloseButton(_G.RecruitAFriendFrameCloseButton)
-	S:HandleCloseButton(_G.RecruitAFriendSentFrameCloseButton)
-
-	_G.ScrollOfResurrectionFrameTargetEditBoxLeft:SetTexture()
-	_G.ScrollOfResurrectionFrameTargetEditBoxMiddle:SetTexture()
-	_G.ScrollOfResurrectionFrameTargetEditBoxRight:SetTexture()
-
-	_G.ScrollOfResurrectionFrame:SetTemplate('Transparent')
-	_G.ScrollOfResurrectionFrameNoteFrame:SetTemplate()
-	_G.ScrollOfResurrectionFrameTargetEditBox:SetTemplate()
-
-	_G.RecruitAFriendFrame.MoreDetails.Text:FontTemplate()
 
 	S:HandleEditBox(_G.FriendsFriendsList)
-	S:HandleEditBox(_G.RecruitAFriendNameEditBox)
-	S:HandleEditBox(_G.RecruitAFriendNoteFrame)
-
-	hooksecurefunc('RecruitAFriend_Send', function()
-		_G.RecruitAFriendSentFrame:ClearAllPoints()
-		_G.RecruitAFriendSentFrame:Point('CENTER', E.UIParent, 'CENTER', 0, 100)
-	end)
 
 	S:HandleScrollBar(_G.FriendsFriendsScrollFrameScrollBar)
 
@@ -234,7 +205,7 @@ function S:FriendsFrame()
 
 	do
 		local button, level, name, class
-
+		
 		for i = 1, _G.WHOS_TO_DISPLAY do
 			button = _G['WhoFrameButton'..i]
 			level = _G['WhoFrameButton'..i..'Level']
@@ -262,25 +233,26 @@ function S:FriendsFrame()
 	end
 
 	hooksecurefunc('WhoList_Update', function()
-		local numWhos = C_FriendList.GetNumWhoResults()
+		local numWhos = C_FriendList_GetNumWhoResults()
 		if numWhos == 0 then return end
 
-		local playerZone = GetRealZoneText()
+		local playerZone = E.MapInfo.realZoneText
+		local WHOS_TO_DISPLAY = _G.WHOS_TO_DISPLAY
 
-		numWhos = numWhos > WHOS_TO_DISPLAY and WHOS_TO_DISPLAY or numWhos
+		numWhos = (numWhos > WHOS_TO_DISPLAY and WHOS_TO_DISPLAY) or numWhos
 
 		local button, buttonText, classTextColor, levelTextColor, info
 
 		for i = 1, numWhos do
 			button = _G['WhoFrameButton'..i]
-			info = C_FriendList.GetWhoInfo(button.whoIndex)
+			info = C_FriendList_GetWhoInfo(button.whoIndex)
 
 			if info.filename then
-				classTextColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[info.filename] or RAID_CLASS_COLORS[info.filename]
+				classTextColor = E:ClassColor(info.filename)
 				button.icon:Show()
-				button.icon:SetTexCoord(unpack(CLASS_ICON_TCOORDS[info.filename]))
+				button.icon:SetTexCoord(unpack(_G.CLASS_ICON_TCOORDS[info.filename]))
 			else
-				classTextColor = HIGHLIGHT_FONT_COLOR
+				classTextColor = _G.HIGHLIGHT_FONT_COLOR
 				button.icon:Hide()
 			end
 
@@ -356,20 +328,20 @@ function S:FriendsFrame()
 	end
 
 	hooksecurefunc('GuildStatus_Update', function()
-		local _, level, class, zone, online, classFileName
-		local button, buttonText, classTextColor, levelTextColor
-		local playerZone = GetRealZoneText()
+		local _, level, class, zone, online
+		local button, buttonText
+		local playerZone = E.MapInfo.realZoneText
 
 		if FriendsFrame.playerStatusFrame then
 			for i = 1, GUILDMEMBERS_TO_DISPLAY, 1 do
 				button = _G['GuildFrameButton'..i]
 				_, _, _, level, class, zone, _, _, online = GetGuildRosterInfo(button.guildIndex)
 
-				classFileName = E:UnlocalizedClassName(class)
+				local classFileName = E:UnlocalizedClassName(class)
 				if classFileName then
 					if online then
-						classTextColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName] or RAID_CLASS_COLORS[classFileName]
-						levelTextColor = GetQuestDifficultyColor(level)
+						local classTextColor = E:ClassColor(classFileName)
+						local levelTextColor = GetQuestDifficultyColor(level)
 
 						buttonText = _G['GuildFrameButton'..i..'Name']
 						buttonText:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
@@ -383,7 +355,7 @@ function S:FriendsFrame()
 						end
 					end
 
-					button.icon:SetTexCoord(unpack(CLASS_ICON_TCOORDS[classFileName]))
+					button.icon:SetTexCoord(unpack(_G.CLASS_ICON_TCOORDS[classFileName]))
 				end
 			end
 		else
@@ -391,21 +363,19 @@ function S:FriendsFrame()
 				button = _G['GuildFrameGuildStatusButton'..i]
 				_, _, _, _, class, _, _, _, online = GetGuildRosterInfo(button.guildIndex)
 
-				classFileName = E:UnlocalizedClassName(class)
+				local classFileName = E:UnlocalizedClassName(class)
 				if classFileName then
 					if online then
-						classTextColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName] or RAID_CLASS_COLORS[classFileName]
+						local classTextColor = E:ClassColor(classFileName)
 						_G['GuildFrameGuildStatusButton'..i..'Name']:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
 						_G['GuildFrameGuildStatusButton'..i..'Online']:SetTextColor(1, 1, 1)
 					end
 				end
-			end
+			end	
 		end
 	end)
 
-	_G.GuildFrameLFGFrame:StripTextures()
-	_G.GuildFrameLFGFrame:SetTemplate('Transparent')
-
+	S:HandleFrame(_G.GuildFrameLFGFrame, true)
 	S:HandleCheckBox(_G.GuildFrameLFGButton)
 
 	for i = 1, 4 do

@@ -3,6 +3,7 @@ local S = E:GetModule('Skins')
 
 local _G = _G
 
+--Mix Original Method end methos in ElvUI-TBC
 function S:GuildRegistrarFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.guildregistrar) then return end
 
@@ -12,7 +13,7 @@ function S:GuildRegistrarFrame()
 	_G.GuildRegistrarFrameEditBox:StripTextures()
 	_G.GuildRegistrarGreetingFrame:StripTextures()
 
-	S:HandleCloseButton(GuildRegistrarFrameCloseButton)
+	S:HandleCloseButton(_G.GuildRegistrarFrameCloseButton)
 
 	S:HandleButton(_G.GuildRegistrarFrameGoodbyeButton)
 	S:HandleButton(_G.GuildRegistrarFrameCancelButton)
@@ -35,7 +36,7 @@ function S:GuildRegistrarFrame()
 	end
 
 	_G.GuildRegistrarPurchaseText:SetTextColor(1, 1, 1)
-	_G.AvailableServicesText:SetTextColor(1, 1, 0)
+	_G.GuildAvailableServicesText:SetTextColor(1, 1, 0)
 end
 
 S:AddCallback('GuildRegistrarFrame')

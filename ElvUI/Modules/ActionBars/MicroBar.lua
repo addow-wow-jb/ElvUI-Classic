@@ -90,10 +90,19 @@ function AB:HandleMicroButton(button)
 end
 
 function AB:MainMenuMicroButton_SetNormal()
+	--see https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Modules/ActionBars/MicroBar.lua#L96
+	_G.MainMenuBarPerformanceBar:ClearAllPoints()
+	-- Interface\AddOns\ElvUI\Core\Toolkit.lua:201: Action[SetPoint] failed because
+	-- [SetPoint would result in anchor family connection]: attempted from: CharacterMicroButton:SetPoint.
 	_G.MainMenuBarPerformanceBar:Point('TOPLEFT', _G.MainMenuMicroButton, 'TOPLEFT', 9, -36)
 end
 
 function AB:MainMenuMicroButton_SetPushed()
+
+	_G.MainMenuBarPerformanceBar:ClearAllPoints()
+	--see https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Modules/ActionBars/MicroBar.lua#L101
+	-- Interface\AddOns\ElvUI\Core\Toolkit.lua:201: Action[SetPoint] failed because
+	-- [SetPoint would result in anchor family connection]: attempted from: CharacterMicroButton:SetPoint.
 	_G.MainMenuBarPerformanceBar:Point('TOPLEFT', _G.MainMenuMicroButton, 'TOPLEFT', 8, -37)
 end
 

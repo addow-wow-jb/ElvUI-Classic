@@ -240,6 +240,12 @@ local function SetTemplate(frame, template, glossTex, ignoreUpdates, forcePixelM
 	if forcePixelMode then frame.forcePixelMode = forcePixelMode end
 	if isUnitFrameElement then frame.isUnitFrameElement = isUnitFrameElement end
 
+	--See https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Core/Toolkit.lua#L135
+	if not frame.SetBackdrop then
+		_G.Mixin(frame, _G.BackdropTemplateMixin)
+		frame:HookScript('OnSizeChanged', frame.OnBackdropSizeChanged)
+	end
+	-- Interface\AddOns\ElvUI\Core\Toolkit.lua:243: attempt to call method 'SetBackdrop' (a nil value)
 	frame:SetBackdrop(nil)
 	E:BuildPixelBorders(frame)
 
@@ -258,7 +264,8 @@ local function SetTemplate(frame, template, glossTex, ignoreUpdates, forcePixelM
 
 		if not E.PixelMode and not frame.forcePixelMode then
 			if not frame.iborder then
-				local border = CreateFrame('Frame', nil, frame)
+				--local border = CreateFrame('Frame', nil, frame)
+				local border = CreateFrame('Frame', nil, frame, 'BackdropTemplate')
 				E:BuildPixelBorders(border, true)
 				E:SetBackdrop(border, true, nil, E.mult, -E.mult, -E.mult, -E.mult, -E.mult)
 				E:SetBackdropBorderColor(border, 0, 0, 0, 1)
@@ -267,7 +274,8 @@ local function SetTemplate(frame, template, glossTex, ignoreUpdates, forcePixelM
 			end
 
 			if not frame.oborder then
-				local border = CreateFrame('Frame', nil, frame)
+				--local border = CreateFrame('Frame', nil, frame)
+				local border = CreateFrame('Frame', nil, frame, 'BackdropTemplate')
 				E:BuildPixelBorders(border, true)
 				E:SetBackdrop(border, true, nil, E.mult, E.mult, E.mult, E.mult, E.mult)
 				E:SetBackdropBorderColor(border, 0, 0, 0, 1)
@@ -292,7 +300,8 @@ end
 
 local function CreateBackdrop(frame, template, glossTex, ignoreUpdates, forcePixelMode, isUnitFrameElement)
 	local parent = (frame.IsObjectType and frame:IsObjectType('Texture') and frame:GetParent()) or frame
-	local backdrop = frame.backdrop or CreateFrame('Frame', nil, parent)
+	-- local backdrop = frame.backdrop or CreateFrame('Frame', nil, parent)
+	local backdrop = frame.backdrop or CreateFrame('Frame', nil, parent, 'BackdropTemplate')
 	if not frame.backdrop then frame.backdrop = backdrop end
 
 	if frame.forcePixelMode or forcePixelMode then
@@ -317,7 +326,11 @@ local function CreateShadow(frame, size, pass)
 
 	backdropr, backdropg, backdropb, borderr, borderg, borderb = 0, 0, 0, 0, 0, 0
 
-	local shadow = CreateFrame('Frame', nil, frame)
+	-- Interface\AddOns\ElvUI\Core\Toolkit.lua:331: attempt to call method 'SetBackdrop' (a nil value)
+	-- local shadow = CreateFrame('Frame', nil, frame)
+
+	--See https://github.com/tukui-org/ElvUI-TBC/blob/development/ElvUI/Core/Toolkit.lua#L242
+	local shadow = CreateFrame('Frame', nil, frame, 'BackdropTemplate')
 	shadow:SetFrameLevel(1)
 	shadow:SetFrameStrata(frame:GetFrameStrata())
 	shadow:SetOutside(frame, size or 3, size or 3)

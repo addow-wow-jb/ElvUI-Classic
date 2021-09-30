@@ -154,6 +154,8 @@ function S:BlizzardQuestFrames()
 		if link then
 			quality = select(3, GetItemInfo(link))
 		end
+		
+		frame:SetTemplate('NoBackdrop')
 
 		if quality and quality > 1 then
 			local r, g, b = GetItemQualityColor(quality)

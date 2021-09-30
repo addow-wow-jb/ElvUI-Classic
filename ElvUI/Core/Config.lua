@@ -23,7 +23,8 @@ local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 local RESET = RESET
 -- GLOBALS: ElvUIMoverPopupWindow, ElvUIMoverNudgeWindow, ElvUIMoverPopupWindowDropDown
 
-local ConfigTooltip = CreateFrame("GameTooltip", "ElvUIConfigTooltip", E.UIParent, "GameTooltipTemplate")
+-- local ConfigTooltip = CreateFrame("GameTooltip", "ElvUIConfigTooltip", E.UIParent, "GameTooltipTemplate")
+local ConfigTooltip = CreateFrame("GameTooltip", "ElvUIConfigTooltip", E.UIParent, "GameTooltipTemplate, BackdropTemplate")
 
 local grid
 E.ConfigModeLayouts = {
@@ -250,7 +251,7 @@ function E:AssignFrameToNudge()
 end
 
 function E:CreateMoverPopup()
-	local f = CreateFrame('Frame', 'ElvUIMoverPopupWindow', _G.UIParent)
+	local f = CreateFrame('Frame', 'ElvUIMoverPopupWindow', _G.UIParent, 'BackdropTemplate')
 	f:SetFrameStrata('DIALOG')
 	f:SetToplevel(true)
 	f:EnableMouse(true)
@@ -266,7 +267,7 @@ function E:CreateMoverPopup()
 	f:CreateShadow(5)
 	f:Hide()
 
-	local header = CreateFrame('Button', nil, f)
+	local header = CreateFrame('Button', nil, f, 'BackdropTemplate')
 	header:SetTemplate(nil, true)
 	header:Width(100); header:Height(25)
 	header:Point('CENTER', f, 'TOP')
@@ -297,7 +298,7 @@ function E:CreateMoverPopup()
 	snapping:SetScript('OnShow', function(cb) cb:SetChecked(E.db.general.stickyFrames) end)
 	snapping:SetScript('OnClick', function(cb) E.db.general.stickyFrames = cb:GetChecked() end)
 
-	local lock = CreateFrame('Button', f:GetName()..'CloseButton', f, 'OptionsButtonTemplate')
+	local lock = CreateFrame('Button', f:GetName()..'CloseButton', f, 'OptionsButtonTemplate, BackdropTemplate')
 	_G[lock:GetName() .. 'Text']:SetText(L["Lock"])
 	lock:SetScript('OnClick', function()
 		E:ToggleMoveMode()
@@ -311,7 +312,7 @@ function E:CreateMoverPopup()
 		end
 	end)
 
-	local align = CreateFrame('EditBox', f:GetName()..'EditBox', f, 'InputBoxTemplate')
+	local align = CreateFrame('EditBox', f:GetName()..'EditBox', f, 'InputBoxTemplate, BackdropTemplate')
 	align:Width(24)
 	align:Height(17)
 	align:SetAutoFocus(false)
@@ -373,7 +374,7 @@ function E:CreateMoverPopup()
 
 	_G.UIDropDownMenu_Initialize(configMode, ConfigMode_Initialize)
 
-	local nudgeFrame = CreateFrame('Frame', 'ElvUIMoverNudgeWindow', E.UIParent)
+	local nudgeFrame = CreateFrame('Frame', 'ElvUIMoverNudgeWindow', E.UIParent, 'BackdropTemplate')
 	nudgeFrame:SetFrameStrata('DIALOG')
 	nudgeFrame:Width(200)
 	nudgeFrame:Height(110)
@@ -409,7 +410,7 @@ function E:CreateMoverPopup()
 	desc:SetJustifyH('CENTER')
 	nudgeFrame.title = desc
 
-	header = CreateFrame('Button', nil, nudgeFrame)
+	header = CreateFrame('Button', nil, nudgeFrame, 'BackdropTemplate')
 	header:SetTemplate(nil, true)
 	header:Width(100); header:Height(25)
 	header:Point('CENTER', nudgeFrame, 'TOP')
@@ -492,7 +493,7 @@ function E:CreateMoverPopup()
 	nudgeFrame.yOffset = yOffset
 	S:HandleEditBox(yOffset)
 
-	local resetButton = CreateFrame('Button', nudgeFrame:GetName()..'ResetButton', nudgeFrame, 'UIPanelButtonTemplate')
+	local resetButton = CreateFrame('Button', nudgeFrame:GetName()..'ResetButton', nudgeFrame, 'UIPanelButtonTemplate, BackdropTemplate')
 	resetButton:SetText(RESET)
 	resetButton:Point('TOP', nudgeFrame, 'CENTER', 0, 2)
 	resetButton:Size(100, 25)
@@ -503,28 +504,28 @@ function E:CreateMoverPopup()
 	end)
 	S:HandleButton(resetButton)
 
-	local upButton = CreateFrame('Button', nudgeFrame:GetName()..'UpButton', nudgeFrame)
+	local upButton = CreateFrame('Button', nudgeFrame:GetName()..'UpButton', nudgeFrame, 'BackdropTemplate')
 	upButton:Point('BOTTOMRIGHT', nudgeFrame, 'BOTTOM', -6, 4)
 	upButton:SetScript('OnClick', function() E:NudgeMover(nil, 1) end)
 	S:HandleNextPrevButton(upButton)
 	S:HandleButton(upButton)
 	upButton:Size(22)
 
-	local downButton = CreateFrame('Button', nudgeFrame:GetName()..'DownButton', nudgeFrame)
+	local downButton = CreateFrame('Button', nudgeFrame:GetName()..'DownButton', nudgeFrame, 'BackdropTemplate')
 	downButton:Point('BOTTOMLEFT', nudgeFrame, 'BOTTOM', 6, 4)
 	downButton:SetScript('OnClick', function() E:NudgeMover(nil, -1) end)
 	S:HandleNextPrevButton(downButton)
 	S:HandleButton(downButton)
 	downButton:Size(22)
 
-	local leftButton = CreateFrame('Button', nudgeFrame:GetName()..'LeftButton', nudgeFrame)
+	local leftButton = CreateFrame('Button', nudgeFrame:GetName()..'LeftButton', nudgeFrame, 'BackdropTemplate')
 	leftButton:Point('RIGHT', upButton, 'LEFT', -6, 0)
 	leftButton:SetScript('OnClick', function() E:NudgeMover(-1) end)
 	S:HandleNextPrevButton(leftButton)
 	S:HandleButton(leftButton)
 	leftButton:Size(22)
 
-	local rightButton = CreateFrame('Button', nudgeFrame:GetName()..'RightButton', nudgeFrame)
+	local rightButton = CreateFrame('Button', nudgeFrame:GetName()..'RightButton', nudgeFrame, 'BackdropTemplate')
 	rightButton:Point('LEFT', downButton, 'RIGHT', 6, 0)
 	rightButton:SetScript('OnClick', function() E:NudgeMover(1) end)
 	S:HandleNextPrevButton(rightButton)
@@ -811,7 +812,7 @@ function E:Config_CreateLeftButtons(frame, unskinned, options)
 			if ACD then ACD:SelectGroup("ElvUI", key) end
 		end
 
-		local btn = E:Config_CreateButton(info, frame, unskinned, 'Button', nil, buttons, 'UIPanelButtonTemplate')
+		local btn = E:Config_CreateButton(info, frame, unskinned, 'Button', nil, buttons, 'UIPanelButtonTemplate, BackdropTemplate')
 		btn:Width(177)
 
 		if not last then
@@ -985,7 +986,7 @@ function E:Config_CreateBottomButtons(frame, unskinned)
 			end
 		}
 	}) do
-		local btn = E:Config_CreateButton(info, frame, unskinned, 'Button', nil, frame.bottomHolder, 'UIPanelButtonTemplate')
+		local btn = E:Config_CreateButton(info, frame, unskinned, 'Button', nil, frame.bottomHolder, 'UIPanelButtonTemplate, BackdropTemplate')
 		local offset = unskinned and 14 or 8
 
 		if not last then
@@ -1124,13 +1125,13 @@ function E:ToggleOptionsUI(msg)
 				end
 			end
 
-			local bottom = CreateFrame('Frame', nil, frame)
+			local bottom = CreateFrame('Frame', nil, frame, 'BackdropTemplate')
 			bottom:Point("BOTTOMLEFT", 2, 2)
 			bottom:Point("BOTTOMRIGHT", -2, 2)
 			bottom:Height(37)
 			frame.bottomHolder = bottom
 
-			local close = CreateFrame('Button', nil, frame, 'UIPanelCloseButton')
+			local close = CreateFrame('Button', nil, frame, 'UIPanelCloseButton, BackdropTemplate')
 			close:SetScript("OnClick", E.Config_CloseClicked)
 			close:SetFrameLevel(1000)
 			close:Point("TOPRIGHT", unskinned and -8 or 1, unskinned and -8 or 2)
@@ -1138,13 +1139,13 @@ function E:ToggleOptionsUI(msg)
 			close.originalClose = frame.originalClose
 			frame.closeButton = close
 
-			local left = CreateFrame('Frame', nil, frame)
+			local left = CreateFrame('Frame', nil, frame, 'BackdropTemplate')
 			left:Point("BOTTOMRIGHT", bottom, "BOTTOMLEFT", 181, 0)
 			left:Point("BOTTOMLEFT", bottom, "TOPLEFT", 0, 1)
 			left:Point("TOPLEFT", unskinned and 10 or 2, unskinned and -6 or -2)
 			frame.leftHolder = left
 
-			local top = CreateFrame('Frame', nil, frame)
+			local top = CreateFrame('Frame', nil, frame, 'BackdropTemplate')
 			top.version = frame.obj.titletext
 			top:Point("TOPRIGHT", frame, -2, 0)
 			top:Point("TOPLEFT", left, "TOPRIGHT", 1, 0)
@@ -1170,13 +1171,13 @@ function E:ToggleOptionsUI(msg)
 			buttonsHolder:SetClipsChildren(true)
 			left.buttonsHolder = buttonsHolder
 
-			local buttons = CreateFrame('Frame', nil, buttonsHolder)
+			local buttons = CreateFrame('Frame', nil, buttonsHolder, 'BackdropTemplate')
 			buttons:Point("BOTTOMLEFT", bottom, "TOPLEFT", 0, 1)
 			buttons:Point("BOTTOMRIGHT")
 			buttons:Point("TOPLEFT", 0, 0)
 			left.buttons = buttons
 
-			local slider = CreateFrame('Slider', nil, frame)
+			local slider = CreateFrame('Slider', nil, frame, 'BackdropTemplate')
 			slider:SetThumbTexture(E.Media.Textures.White8x8)
 			slider:SetScript('OnMouseWheel', ConfigSliderOnMouseWheel)
 			slider:SetScript('OnValueChanged', ConfigSliderOnValueChanged)

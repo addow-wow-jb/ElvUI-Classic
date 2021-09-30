@@ -59,7 +59,7 @@ function S:TradeFrame()
 		end
 	end
 
-	for _, Inset in pairs({ _G.TradePlayerItemsInset, _G.TradeRecipientItemsInset, _G.TradePlayerEnchantInset, _G.TradeRecipientEnchantInset }) do
+	for _, Inset in pairs({ _G.TradePlayerItemsInset, _G.TradeRecipientItemsInset, _G.TradePlayerEnchantInset, _G.TradeRecipientEnchantInset, _G.TradeRecipientMoneyInset }) do
 		Inset:StripTextures()
 		Inset:SetTemplate('Transparent')
 	end
@@ -99,6 +99,7 @@ function S:TradeFrame()
 		local tradeItemButton = _G['TradePlayerItem'..id..'ItemButton']
 		local link = GetTradePlayerItemLink(id)
 
+		tradeItemButton:SetTemplate('NoBackdrop')
 		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 		if link then
@@ -117,6 +118,7 @@ function S:TradeFrame()
 		local tradeItemButton = _G['TradeRecipientItem'..id..'ItemButton']
 		local link = GetTradeTargetItemLink(id)
 
+		tradeItemButton:SetTemplate('NoBackdrop')
 		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 		if link then
